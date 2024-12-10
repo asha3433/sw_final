@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>goalweight</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded" />
+    <style>
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        background: #f9f9f9;
+        margin: 0;
+      }
+
+      .container {
+        text-align: center;
+      }
+
+      #myTextBox {
+        background: transparent;
+        border: none;
+        font-weight: 600;
+        font-size: 75px; /* 기본 텍스트 크기 */
+        text-align: center;
+        color: #aaa; /* 기본 값 회색 */
+        width: 120px; /* 넉넉한 너비 */
+        padding: 5px;
+        cursor: pointer;
+        outline: none;
+        margin-top: 85px;
+        transition: font-size 0.2s ease-in-out, color 0.3s ease-in-out, border 0.3s ease-in-out;
+      }
+
+      #myTextBox:focus {
+        background: white;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        color: #000; /* 입력 시 색 변경 */
+      }
+
+      .kg-text {
+        font-size: 40px; /* kg 텍스트 크기 */
+        color: #333;
+        font-weight: bold;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="relative bg-white w-full max-w-[390px] h-[844px] overflow-hidden flex flex-col items-center">
+      <!-- Back Arrow -->
+      <button
+        class="absolute top-10 left-5 w-6 h-6">
+        <span class="material-symbols-rounded">arrow_back_ios</span>
+      </button>
+
+      <!-- Title -->
+      <div class="mt-32 text-center px-5">
+        <p class="text-2xl font-bold text-black">목표 몸무게를 설정해주세요</p>
+        <p class="mt-4 text-lg font-semibold text-gray-400">
+          원하는 목표치를 입력해주세요
+        </p>
+      </div>
+
+      <!-- 텍스트 박스 -->
+      <div class="container">
+        <input
+          type="text"
+          id="myTextBox"
+          value=""
+          placeholder="70"
+          onfocus="handleFocus(this)"
+          onblur="handleBlur(this)"
+          oninput="adjustFontSize(this)"
+        />
+        <span class="kg-text">kg</span>
+      </div>
+
+      <!-- Button -->
+      <div class="absolute bottom-5 w-[90%]">
+        <button
+          class="w-full py-4 bg-teal-500 text-white text-center text-lg font-medium rounded-lg hover:bg-teal-600 transition-all"
+        >
+          다음
+        </button>
+      </div>
+    </div>
+
+    <script>
+      const placeholderText = "70";
+
+      function handleFocus(input) {
+        // 포커스 시 회색 예시 제거
+        if (input.placeholder === placeholderText) {
+          input.placeholder = "";
+          input.style.color = "#000"; // 검정색으로 변경
+        }
+      }
+
+      function handleBlur(input) {
+        // 포커스를 벗어났을 때 값이 없으면 다시 예시 표시
+        if (input.value.trim() === "") {
+          input.placeholder = placeholderText;
+          input.style.color = "#aaa"; // 회색으로 변경
+        }
+      }
+
+      function adjustFontSize(input) {
+        // 숫자만 입력 가능, 3자리 제한
+        input.value = input.value.replace(/[^0-9]/g, "").slice(0, 3);
+
+        // 글자 길이에 따라 크기 및 너비 조정
+        const length = input.value.length;
+        if (length <= 2) {
+          input.style.fontSize = "75px";
+          input.style.width = "120px";
+        } else if (length === 3) {
+          input.style.fontSize = "75px";
+          input.style.width = "155px";
+        }
+      }
+    </script>
+  </body>
+</html>
