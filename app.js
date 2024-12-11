@@ -6,8 +6,10 @@ app.post('/register', async (req, res) => {
     try {
         const hashedPassword = await bcrypt.hash(password, 10);
         const query = 'INSERT INTO users (username, password) VALUES (?, ?)';
+        console.log('db 쿼리중(아이디, 비번 추가);
         db.query(query, [username, hashedPassword], (err, result) => {
             if (err) {
+                
                 return res.status(500).json({ message: 'Error registering user', error: err });
             } else {
                 return res.status(200).json({ message: 'Registration successful' });
@@ -24,6 +26,7 @@ app.post('/login', async (req, res) => {
 
     try {
         const query = 'SELECT * FROM users WHERE username = ?';
+        console.log('db 쿼리중(아이디 찾기)
         db.query(query, [username], async (err, results) => {
             if (err || results.length === 0) {
                 return res.status(400).json({ message: 'Invalid username or password' });
