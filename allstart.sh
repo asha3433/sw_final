@@ -37,6 +37,11 @@ sudo apt install -y mysql-server
 echo "MySQL 서비스 상태 확인:"
 sudo systemctl status mysql | grep "active (running)"
 
+# MySQL 패스워드 정책 변경 (패스워드 정책을 LOW로 설정)
+echo "MySQL 패스워드 정책을 LOW로 설정합니다..."
+sudo mysql -e "SET GLOBAL validate_password.policy = LOW;"
+sudo mysql -e "SET GLOBAL validate_password.length = 4;"
+
 # MySQL root 비밀번호 및 인증 방식 설정
 MYSQL_ROOT_PASSWORD="3433"
 echo "MySQL root 비밀번호 및 인증 방식을 설정합니다..."
