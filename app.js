@@ -1,15 +1,34 @@
+const express = require('express');
+const session = require('express-session');
+const bcrypt = require('bcrypt');
+const db = require('./db');
+const app = express();
+const PORT = 3000;
+const HOST = '0.0.0.0'; // 모든 네트워크 인터페이스에서 수신 대기
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(express.static('public'));
+
+// Configure session
+app.use(session({
+    secret: 'abcdef',
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: false } // Set true if using HTTPS
+}));
 
 // 회원가입 구현
 app.post('/register', async (req, res) => {
     const { username, password } = req.body;
-    
+
     try {
         const hashedPassword = await bcrypt.hash(password, 10);
         const query = 'INSERT INTO users (username, password) VALUES (?, ?)';
         console.log('db 쿼리중(아이디, 비번 추가)');
         db.query(query, [username, hashedPassword], (err, result) => {
             if (err) {
-                
+
                 return res.status(500).json({ message: 'Error registering user', error: err });
             } else {
                 return res.status(200).json({ message: 'Registration successful' });
@@ -36,7 +55,7 @@ app.post('/login', async (req, res) => {
 
                 if (match) {
                     req.session.username = username;  // Store username in session
-                    
+
                     return res.status(200).json({ message: 'Login successful', username: user.username });
                 } else {
                     return res.status(400).json({ message: 'Invalid username or password' });
@@ -68,7 +87,7 @@ app.delete('/delete-note/:id', (req, res) => {
     if (!req.session.username) {
         return res.status(401).json({ message: '로그인이 필요합니다' });
     }
-    
+
     const noteId = req.params.id;
     const deleteQuery = 'DELETE FROM notes WHERE id = ?';
 
@@ -87,13 +106,13 @@ app.put('/update-notes/:id', (req, res) => {
     const query = 'UPDATE notes SET title = ?, contents = ? WHERE id = ?';
 
     db.query(query, [title, content, memo_id], (err, result) => {
-      if (err) {
-        res.status(500).send(err);
-      } else {
-        res.status(200).send({ message: '수정 완료' });
-      }
+        if (err) {
+            res.status(500).send(err);
+        } else {
+            res.status(200).send({ message: '수정 완료' });
+        }
     });
-  });
+});
 
 // 메모 추가 API
 app.post('/add-note', (req, res) => {
@@ -103,7 +122,7 @@ app.post('/add-note', (req, res) => {
 
     const { title, contents } = req.body;
     const query = 'SELECT id FROM users WHERE username = ?';
-    
+
     db.query(query, [req.session.username], (err, results) => {
         if (err || results.length === 0) {
             return res.status(500).json({ message: 'User not found' });
@@ -111,12 +130,12 @@ app.post('/add-note', (req, res) => {
 
         const userId = results[0].id;
         const insertQuery = 'INSERT INTO notes (user_id, title, contents) VALUES (?, ?, ?)';
-        
+
         db.query(insertQuery, [userId, title, contents], (err, result) => {
             if (err) {
                 console.error('Error during INSERT query:', err); // 메모 추가 오류 로그
                 return res.status(500).json({ message: 'Error adding note', error: err });
-                
+
             }
             return res.status(200).json({ message: '추가 완료' });
         });
@@ -218,4 +237,9 @@ app.get('/get-weight', (req, res) => {
             });
         });
     });
+});
+
+// Start the server
+app.listen(PORT, HOST, () => {
+    console.log(`Server running on http://localhost:${PORT}`);
 });
