@@ -3,7 +3,7 @@
 # MySQL 접속 정보
 USER="root"
 PASSWORD="3433"
-DATABASE="userdb"
+DATABASE="userDB"
 
 # MySQL 접속 및 데이터베이스 및 테이블 생성
 mysql -u $USER -p$PASSWORD -e "
