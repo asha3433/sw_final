@@ -42,3 +42,17 @@ sudo mysql_secure_installation
 # 설치 완료 메시지
 echo "Node.js와 MySQL 설치가 완료되었습니다."
 
+# 실행할 파일 목록
+SCRIPTS=("dbsetting.sh" "npm_install.sh")
+
+# 각 스크립트를 순서대로 sudo 권한으로 실행
+for script in "${SCRIPTS[@]}"; do
+  sudo ./"$script"
+done
+
+# 설치 완료 메시지지
+echo "db & npm 패키지 설치가 완료 되었습니다"
+
+# Node.js 애플리케이션 실행
+echo "Node.js 애플리케이션 실행 중..."
+node app.js
