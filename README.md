@@ -4,6 +4,8 @@
 * merge후 실제 api를 클라이언트와 연동후 에러는 함께 모여서 수정
 
 ## 사용법
+* **RAID 구성은 따로 virtualbox에서 필요**
+
 1. **git clone을 하고 해당 경로로 이동**
 2. **bash에 sudo chmod +x allstart.sh를 실행**
 3. **sudo로 allstart.sh를 실행함**
