@@ -39,6 +39,19 @@ sudo systemctl status mysql | grep "active (running)"
 echo "MySQL 보안 설정을 수행합니다..."
 sudo mysql_secure_installation
 
+# MySQL root 비밀번호 설정
+echo "MySQL root 비밀번호를 설정합니다..."
+sudo mysql -e "ALTER USER 'root'@'localhost' IDENTIFIED BY '3433';"
+
+# 권한 플러시
+sudo mysql -e "FLUSH PRIVILEGES;"
+
+# MySQL 서비스 상태 확인
+echo "MySQL 서비스 상태 확인:"
+sudo systemctl status mysql | grep "active (running)"
+
+echo "MySQL 설치 및 root 계정 설정이 완료되었습니다."
+
 # 설치 완료 메시지
 echo "Node.js와 MySQL 설치가 완료되었습니다."
 
