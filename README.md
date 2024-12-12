@@ -5,6 +5,7 @@
 
 ## 사용법
 * **RAID 구성은 따로 virtualbox에서 필요**
+* **포트포워딩 필요 => virtualbox에서 호스트 8000 => 게스트 3000(nodejs)**
 
 1. **git clone을 하고 해당 경로로 이동**
 2. **bash에 sudo chmod +x allstart.sh를 실행**
