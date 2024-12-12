@@ -41,10 +41,10 @@ sudo systemctl status mysql | grep "active (running)"
 echo "MySQL 보안 설정을 수행합니다..."
 sudo mysql_secure_installation
 
-# MySQL root 비밀번호 설정
+# MySQL root 비밀번호 및 인증 방식 설정
 MYSQL_ROOT_PASSWORD="3433"
-echo "MySQL root 비밀번호를 설정합니다..."
-sudo mysql -e "ALTER USER 'root'@'localhost' IDENTIFIED BY '${MYSQL_ROOT_PASSWORD}';"
+echo "MySQL root 비밀번호 및 인증 방식을 설정합니다..."
+sudo mysql -e "ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '${MYSQL_ROOT_PASSWORD}';"
 
 # 권한 플러시
 sudo mysql -e "FLUSH PRIVILEGES;"
