@@ -103,12 +103,11 @@
 <body>
     <div class="container">
         <!-- Login Form -->
-        <!-- 추후에 api로 구현할 계획 -->
-        <form action="/login" method="POST">
+        <form id =loginForm method="POST">
             <p class="login-title">Login</p>
 
             <div style="margin-bottom: 10px;">
-                <p class="input-label">아이디</p>
+                <p class="input-label">이메일</p>
                 <input
                     type="text"
                     placeholder="아이디"
@@ -133,8 +132,8 @@
             </div>
             <button type="submit" class="submit-btn" style="margin-top: 10px;">로그인</button>
         </form>
-
         <a href="register.html" class="register-link" style="margin-top: 20px;">회원가입</a>
     </div>
+    <script src="script.js"></script>
 </body>
 </html>
