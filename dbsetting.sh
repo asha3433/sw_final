@@ -1,0 +1,37 @@
+#!/bin/bash
+
+# MySQL 접속 정보
+USER="root"
+PASSWORD="3433"
+DATABASE="userdb"
+
+# MySQL 접속 및 데이터베이스 및 테이블 생성
+mysql -u $USER -p$PASSWORD -e "
+CREATE DATABASE IF NOT EXISTS $DATABASE;
+USE $DATABASE;
+
+CREATE TABLE IF NOT EXISTS users (
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(50) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    target_weight INT DEFAULT NULL
+);
+
+CREATE TABLE IF NOT EXISTS DateWeight (
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    date DATE DEFAULT NULL,
+    weight FLOAT NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES users(id)
+);
+
+CREATE TABLE IF NOT EXISTS notes (
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    title VARCHAR(255) NOT NULL,
+    contents TEXT NOT NULL,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id)
+);
+"
