@@ -56,6 +56,9 @@ echo "MySQL 사용자 $USER의 인증 방식을 mysql_native_password로 업데�
 sudo mysql -e "ALTER USER '$USER'@'%' IDENTIFIED WITH mysql_native_password BY '${MYSQL_ROOT_PASSWORD}';"
 sudo mysql -e "FLUSH PRIVILEGES;"
 
+# 최신 인증 방식이 호환되지 않는 경우 legacy-auth를 활성화
+sudo mysql -e "INSTALL PLUGIN mysql_native_password SONAME 'auth_socket';"
+
 # MySQL 서비스 상태 확인
 echo "MySQL 서비스 상태 확인:"
 sudo systemctl status mysql | grep "active (running)"
