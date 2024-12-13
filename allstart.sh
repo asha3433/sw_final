@@ -77,6 +77,24 @@ done
 # 설치 완료 메시지
 echo "Node.js와 MySQL 설치 및 추가 스크립트 실행이 완료되었습니다."
 
+# backup.sh 실행 권한 부여
+BACKUP_SCRIPT="backup.sh"
+if [ -f "$BACKUP_SCRIPT" ]; then
+  echo "$BACKUP_SCRIPT 파일에 실행 권한을 부여합니다..."
+  chmod +x "$BACKUP_SCRIPT"
+else
+  echo "$BACKUP_SCRIPT 파일이 존재하지 않습니다. 실행 권한을 부여할 수 없습니다."
+fi
+
+# backup.sh를 주기적으로 실행하도록 cron에 추가
+CRON_JOB="0 * * * * $(pwd)/$BACKUP_SCRIPT" # 매 시간 정각에 실행
+echo "backup.sh를 cron에 추가합니다..."
+(crontab -l 2>/dev/null; echo "$CRON_JOB") | crontab -
+
+# 추가된 cron job 확인
+echo "현재 설정된 cron job:"
+crontab -l
+
 # Node.js 애플리케이션 실행
 if [ -f "app.js" ]; then
   echo "Node.js 애플리케이션 실행 중..."

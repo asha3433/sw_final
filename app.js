@@ -18,14 +18,16 @@ app.use(session({
   cookie: { secure: false } // Set true if using HTTPS
 }));
 
-// Register route
+// 회원가입 루트
 app.post('/register', async (req, res) => {
   const { username, password } = req.body;
 
   try {
     const hashedPassword = await bcrypt.hash(password, 10);
     const query = 'INSERT INTO users (username, password) VALUES (?, ?)';
+    //콘솔에 뛰워줌
     console.log('db 쿼리중(유저 테이블에 아이디 비번 추가)');
+    // db 쿼리 함
     db.query(query, [username, hashedPassword], (err, result) => {
       if (err) {
         console.log(err);
@@ -35,13 +37,14 @@ app.post('/register', async (req, res) => {
         return res.status(200).json({ message: 'Registration successful' });
       }
     });
+    //예외 처리 적용함
   } catch (error) {
     console.log(err);
     return res.status(500).json({ message: 'Server error', error: error });
   }
 });
 
-// Login route
+// 로그인 루트
 app.post('/login', async (req, res) => {
   const { username, password } = req.body;
 
