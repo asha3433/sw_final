@@ -10,7 +10,6 @@ sudo apt update -y && sudo apt upgrade -y
 # 필수 패키지 설치
 echo "curl, gnupg 및 소프트웨어 필수 패키지 설치 중..."
 sudo apt install -y curl software-properties-common gnupg lsb-release
-#!/bin/bash
 
 # Node.js 및 npm 설치 스크립트
 echo "Node.js 및 npm 설치 중..."
@@ -23,12 +22,9 @@ sudo apt-get install npm
 
 # 설치 확인
 echo "설치 확인..."
-echo "Node.js 버전: $(node -v)"
 echo "npm 버전: $(npm -v)"
 
 echo "Node.js 및 npm 설치 완료!"
-
-
 
 # MySQL 최신 버전 설치
 echo "MySQL 최신 버전 설치 중..."
