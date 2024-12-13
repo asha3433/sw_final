@@ -10,21 +10,25 @@ sudo apt update -y && sudo apt upgrade -y
 # 필수 패키지 설치
 echo "curl, gnupg 및 소프트웨어 필수 패키지 설치 중..."
 sudo apt install -y curl software-properties-common gnupg lsb-release
+#!/bin/bash
 
-# Node.js 최신 LTS 버전 설치
-echo "Node.js 최신 LTS 버전 설치 중..."
-curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
+# Node.js 및 npm 설치 스크립트
+echo "Node.js 및 npm 설치 중..."
+sudo apt-get update
+sudo apt-get install -y software-properties-common
+sudo add-apt-repository -y "deb https://deb.nodesource.com/node_16.x $(lsb_release -sc) main"
+sudo apt-get update
 sudo apt install -y nodejs
-
-# npm 최신 버전으로 업데이트
-echo "npm 최신 버전으로 업데이트 중..."
 sudo npm install -g npm@latest
 
-# Node.js 설치 확인
-echo "Node.js 버전 확인:"
-node -v
-echo "npm 버전 확인:"
-npm -v
+# 설치 확인
+echo "설치 확인..."
+echo "Node.js 버전: $(node -v)"
+echo "npm 버전: $(npm -v)"
+
+echo "Node.js 및 npm 설치 완료!"
+
+
 
 # MySQL 최신 버전 설치
 echo "MySQL 최신 버전 설치 중..."
