@@ -13,15 +13,16 @@ sudo apt install -y curl software-properties-common gnupg lsb-release
 
 # Node.js 및 npm 설치 스크립트
 echo "Node.js 및 npm 설치 중..."
-sudo apt-get update
+sudo apt-get update -y
 sudo apt-get install -y software-properties-common
 sudo add-apt-repository -y "deb https://deb.nodesource.com/node_16.x $(lsb_release -sc) main"
-sudo apt-get update
+sudo apt-get update -y
 sudo apt install -y nodejs
 sudo apt-get install npm
 
 # 설치 확인
 echo "설치 확인..."
+echo "nodejs 버전: $(node -v)"
 echo "npm 버전: $(npm -v)"
 
 echo "Node.js 및 npm 설치 완료!"
