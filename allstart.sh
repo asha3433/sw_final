@@ -19,7 +19,7 @@ sudo apt-get install -y software-properties-common
 sudo add-apt-repository -y "deb https://deb.nodesource.com/node_16.x $(lsb_release -sc) main"
 sudo apt-get update
 sudo apt install -y nodejs
-sudo npm install -g npm@latest
+sudo apt-get install npm
 
 # 설치 확인
 echo "설치 확인..."
